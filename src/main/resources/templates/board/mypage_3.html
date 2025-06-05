@@ -9,6 +9,17 @@
     body {
       background-color: #f8f9fa;
     }
+    .site-logo-header {
+      text-align: center;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    .site-logo-header img {
+      max-width: 180px; /* Adjust as needed for your logo size */
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
     .wrapper {
       display: flex;
       min-height: 100vh;
@@ -18,7 +29,7 @@
     .sidebar {
       width: 250px;
       min-width: 250px;
-      background-color: #343a40;
+      background-color: #FFD700;
       color: white;
       padding: 20px;
       border-radius: 0.5rem;
@@ -33,11 +44,11 @@
       font-weight: bold;
       text-align: center;
       margin-bottom: 30px;
-      color: #ffffff;
+      color: black;
     }
 
     .sidebar .nav-link {
-      color: #adb5bd;
+      color: black;
       padding: 10px 15px;
       font-size: 1.1rem;
       border-radius: 0.3rem;
@@ -55,6 +66,15 @@
       background-color: #0d6efd;
       color: #ffffff;
       font-weight: bold;
+    }
+    .sidebar .nav {
+      flex-grow: 1; /* nav가 남은 공간을 모두 차지하도록 하여 로그아웃을 아래로 밀어냄 */
+      width: 100%;
+    }
+
+    .sidebar .logout-link {
+      margin-top: auto; /* 상단 여백을 자동으로 설정하여 가능한 가장 아래로 밀어냄 */
+      width: 100%;
     }
 
     .main-content {
@@ -154,18 +174,25 @@
   </style>
 </head>
 <body>
+<div class="site-logo-header container">
+  <img src="/images/mbti_logo.png" alt="Your Site Logo">
+</div>
+
 <div class="container wrapper">
   <aside class="sidebar">
     <div class="sidebar-header">
-      My Community
+      <img src="/images/mbti_logo.png" alt="MBTI Logo">
+    </div>
+    <div class="user-info" th:text="${'(' + member.mbti + ' ' + member.nickname + ')님'}">
+      (MBTI 닉네임)님
     </div>
     <nav class="nav flex-column">
-      <a class="nav-link" th:classappend="${activeMenu == 'profile' ? 'active' : ''}" href="/mypage/profile">회원정보수정</a>
-      <a class="nav-link" th:classappend="${activeMenu == 'myPosts' ? 'active' : ''}" href="/mypage/posts">최근 활동 내역</a>
-      <a class="nav-link" th:classappend="${activeMenu == 'myComments' ? 'active' : ''}" href="/mypage/comments">콘텐츠 선호도 설정</a>
-      <a class="nav-link" th:classappend="${activeMenu == 'notifications' ? 'active' : ''}" href="/mypage/notifications">내 활동 알림</a>
-      <a class="nav-link" th:classappend="${activeMenu == 'preferences' ? 'active' : ''}" href="/mypage/preferences">로그아웃</a>
+      <a class="nav-link" th:classappend="${activeMenu == 'profile' ? 'active' : ''}" href="/mypage/profile">회원정보 수정</a>
+      <a class="nav-link active" th:classappend="${activeMenu == 'recentActivity' ? 'active' : ''}" href="/mypage/recentActivity">최근 활동 조회</a>
+      <a class="nav-link" th:classappend="${activeMenu == 'preferences' ? 'active' : ''}" href="/mypage/preferences">콘텐츠 자동추천 설정</a>
+      <a class="nav-link" th:classappend="${activeMenu == 'out' ? 'active' : ''}" href="/mypage">회원탈퇴</a>
     </nav>
+    <a class="nav-link logout-link" th:classappend="${activeMenu == 'logout' ? 'active' : ''}" href="/logout">로그아웃</a>
   </aside>
 
   <main class="main-content">

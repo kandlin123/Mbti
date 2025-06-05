@@ -27,4 +27,6 @@ public class Comment {
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
     }
+
+
 }
