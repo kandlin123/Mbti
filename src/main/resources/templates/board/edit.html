@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 수정</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+<h2 class="mb-4">📝 게시글 수정</h2>
+
+<form th:action="@{/board/update}" method="post">
+    <input type="hidden" name="bno" th:value="${post.bno}" />
+    <div class="mb-3">
+        <label class="form-label">제목</label>
+        <input type="text" class="form-control" name="title" th:value="${post.title}" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">작성자</label>
+        <input type="text" class="form-control" name="writer" th:value="${post.writer}" readonly>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">내용</label>
+        <textarea class="form-control" name="content" rows="7" th:text="${post.content}" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">수정 완료</button>
+    <a th:href="@{/}" class="btn btn-secondary">취소</a>
+</form>
+</body>
+</html>

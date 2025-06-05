@@ -1,0 +1,103 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>게시글 상세보기</title>-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">-->
+<!--</head>-->
+<!--<body class="container mt-5">-->
+<!--<h2 class="mb-4">📄 게시글 상세</h2>-->
+
+<!--<table class="table table-bordered">-->
+<!--    <tr>-->
+<!--        <th>제목</th>-->
+<!--        <td th:text="${post.title}">제목</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <th>작성자</th>-->
+<!--        <td th:text="${post.writer}">작성자</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <th>작성일</th>-->
+<!--        <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">2025-06-02</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <th>조회수</th>-->
+<!--        <td th:text="${post.readcount}">0</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <th>내용</th>-->
+<!--        <td th:text="${post.content}">내용</td>-->
+<!--    </tr>-->
+<!--</table>-->
+<!--<hr>-->
+<!--<h5>💬 댓글</h5>-->
+
+<!--<form th:action="@{/comment}" method="post" class="mb-3">-->
+<!--    <input type="hidden" name="bno" th:value="${post.bno}">-->
+<!--    <div class="mb-2">-->
+<!--        <label>작성자</label>-->
+<!--        <input type="text" name="writer" class="form-control" required>-->
+<!--    </div>-->
+<!--    <div class="mb-2">-->
+<!--        <label>내용</label>-->
+<!--        <textarea name="content" class="form-control" rows="3" required></textarea>-->
+<!--    </div>-->
+<!--    <button class="btn btn-primary">댓글 등록</button>-->
+<!--</form>-->
+
+<!--<ul class="list-group mt-3">-->
+<!--    <li class="list-group-item" th:each="comment : ${comments}">-->
+<!--        <strong th:text="${comment.writer}">닉네임</strong>-->
+<!--        <span class="text-muted" th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}">날짜</span>-->
+<!--        <div th:text="${comment.content}">댓글 내용</div>-->
+<!--    </li>-->
+<!--</ul>-->
+
+
+<!--<a th:href="@{/}" class="btn btn-secondary">목록으로</a>-->
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 상세</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+<h2>게시글 상세보기</h2>
+
+<div class="mb-3">
+    <a href="/" class="btn btn-secondary">목록으로</a>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3 th:text="${post.title}">제목</h3>
+        <small>
+            작성자: <span th:text="${post.writer}">작성자</span> |
+            작성일: <span th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">2025-06-04</span> |
+            조회수: <span th:text="${post.readCount}">0</span>
+        </small>
+    </div>
+    <div class="card-body">
+        <p th:text="${post.content}">게시글 내용</p>
+    </div>
+</div>
+
+<h4 class="mt-4">댓글</h4>
+<div th:if="${#lists.isEmpty(comments)}">
+    댓글이 없습니다.
+</div>
+<ul class="list-group" th:if="${!#lists.isEmpty(comments)}">
+    <li class="list-group-item" th:each="comment : ${comments}">
+        <strong th:text="${comment.writer}">작성자</strong> :
+        <span th:text="${comment.content}">댓글 내용</span>
+        <br>
+        <small th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}">작성일</small>
+    </li>
+</ul>
+
+</body>
+</html>

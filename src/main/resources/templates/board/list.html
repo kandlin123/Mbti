@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>📋 MBTI 커뮤니티 게시판</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+<h2 class="mb-4">📋 커뮤니티 게시판</h2>
+
+<div class="d-flex justify-content-end mb-3">
+    <a href="/board/write" class="btn btn-primary">글쓰기</a>
+</div>
+
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
+    <tr>
+        <th scope="col">no</th>
+        <th scope="col">제목</th>
+        <th scope="col">작성자</th>
+        <th scope="col">작성일</th>
+        <th scope="col">조회수</th>
+        <th scope="col">좋아요 수</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="post, iterStat : ${posts}">
+        <td th:text="${post.bno}">1</td>
+        <td>
+            <a th:href="@{|/board/detail/${post.bno}|}" th:text="${post.title}">제목</a>
+        </td>
+
+        <td th:text="${post.writer}">작성자</td>
+        <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">2025-06-02</td>
+        <td th:text="${post.readCount}">0</td>
+
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

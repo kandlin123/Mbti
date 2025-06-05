@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>회원정보수정</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+<h2 class="mb-4">회원정보수정</h2>
+<p class="text-danger">* 필수항목 입력</p>
+<p class="text-info">비밀번호는 변경 시에만 입력해주세요.</p>
+
+<form th:action="@{/modify}" method="post">
+  <input type="hidden" name="_method" value="patch" /> <div class="mb-3 row">
+  <label class="col-sm-2 col-form-label">ID (Email)</label>
+  <div class="col-sm-10">
+    <input type="userid" class="form-control" name="id" th:value="${memberInfo.userid}" readonly>
+    <small class="form-text text-muted">ID는 변경할 수 없습니다.</small>
+  </div>
+</div>
+
+  <!-- 비밀번호 -->
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">현재 PW</label>
+    <div class="col-sm-6">
+      <input type="password" class="form-control" name="currentPassword">
+      <small class="form-text text-muted">비밀번호 변경 시에만 입력해주세요.</small>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">새 PW</label>
+    <div class="col-sm-6">
+      <input type="password" class="form-control" name="newPassword">
+      <small class="form-text text-muted">8~20자, 영문, 숫자, 특수문자 포함 (변경 시)</small>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">새 PW 확인</label>
+    <div class="col-sm-6">
+      <input type="password" class="form-control" name="confirmNewPassword">
+    </div>
+  </div>
+
+
+  <!-- MBTI -->
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">MBTI <span class="text-danger">*</span></label>
+    <div class="col-sm-3">
+      <select class="form-select" name="mbti" required>
+        <option selected disabled>선택</option>
+        <option>ISTP</option>
+        <option>ISTJ</option>
+        <option>ISFP</option>
+        <option>ISFJ</option>
+        <option>INTP</option>
+        <option>INTJ</option>
+        <option>INFP</option>
+        <option>INFJ</option>
+        <option>ESTP</option>
+        <option>ESTJ</option>
+        <option>ESFP</option>
+        <option>ESFJ</option>````
+        <option>ENTP</option>
+        <option>ENTJ</option>
+        <option>ENFP</option>
+        <option>ENFJ</option>
+      </select>
+    </div>
+    <div class="col-sm-4">
+      <a href="https://www.16personalities.com/ko" target="_blank" class="btn btn-success">MBTI 검사링크</a>
+    </div>
+  </div>
+
+  <!-- 닉네임 -->
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">닉네임 <span class="text-danger">*</span></label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="nickname" name="nickname" required>
+    </div>
+    <div class="col-sm-4">
+      <button type="button" class="btn btn-warning" onclick="generateNickname()">닉네임 자동생성</button>
+    </div>
+  </div>
+
+  <script>
+    function generateNickname() {
+      const mbti = document.querySelector('select[name="mbti"]').value;
+      if (!mbti) {
+        alert("MBTI를 먼저 선택해주세요.");
+        return;
+      }
+
+      fetch(`/nickname/generate?mbti=${mbti}`)
+              .then(response => response.text())
+              .then(nickname => {
+                document.getElementById("nickname").value = nickname;
+              })
+              .catch(error => {
+                console.error("닉네임 생성 실패:", error);
+                alert("닉네임 생성 중 오류가 발생했습니다.");
+              });
+    }
+  </script>
+
+
+  <!-- 성별 -->
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">성별</label>
+    <div class="col-sm-10 d-flex align-items-center gap-3">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="gender" value="none" checked>
+        <label class="form-check-label">선택안함</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="gender" value="male">
+        <label class="form-check-label">남</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="gender" value="female">
+        <label class="form-check-label">여</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- 이메일 -->
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">E-mail</label>
+    <div class="col-sm-6">
+      <input type="email" class="form-control" name="email">
+    </div>
+  </div>
+
+  <!-- 수정하기 버튼 -->
+  <div class="text-center">
+    <button type="submit" class="btn btn-primary px-5">정보 수정</button>
+    <button type="button" class="btn btn-danger px-5 ms-3" onclick="location.href='/mypage/withdraw'">회원 탈퇴</button>
+  </div>
+</form>
+</body>
+</html>
+
+
+<!--사이드바 추가-->
